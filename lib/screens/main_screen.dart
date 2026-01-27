@@ -16,12 +16,12 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  // Updated the list of screens to include SettingsScreen
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    SearchScreen(),
-    CartScreen(),
-    SettingsScreen(), // Replaced ProfileScreen with SettingsScreen
+  // List of screens - note: removed 'const' to avoid StatefulWidget issues
+  final List<Widget> _widgetOptions = <Widget>[
+    const HomeScreen(),
+    const SearchScreen(),
+    const CartScreen(),
+    const SettingsScreen(), // Replaced ProfileScreen with SettingsScreen
   ];
 
   void _onItemTapped(int index) {

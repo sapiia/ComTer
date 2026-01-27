@@ -111,157 +111,153 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 180, child: PageView.builder(controller: _pageController, itemCount: _adData.length, onPageChanged: (int page) => setState(() => _currentPage = page), itemBuilder: (context, index) {
-                    final ad = _adData[index];
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), image: DecorationImage(image: NetworkImage(ad['image']), fit: BoxFit.cover)),
-                      child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), gradient: LinearGradient(begin: Alignment.bottomRight, colors: [Colors.black.withOpacity(0.8), Colors.black.withOpacity(0.1)])),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(ad['text'], style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
-                              const SizedBox(height: 10),
-                              ElevatedButton(onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => PromotionScreen(promotionData: ad)));
-                                },
-                                style: ElevatedButton.styleFrom(backgroundColor: Colors.white, foregroundColor: Colors.black),
-                                child: const Text('Shop Now'),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 10),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(_adData.length, (i) => AnimatedContainer(duration: const Duration(milliseconds: 300), margin: const EdgeInsets.symmetric(horizontal: 4.0), height: 8.0, width: 8.0, decoration: BoxDecoration(shape: BoxShape.circle, color: _currentPage == i ? Colors.blue : Colors.grey.withOpacity(0.5)), transform: Matrix4.identity()..scale(_currentPage == i ? 1.5 : 1.0), transformAlignment: Alignment.center))),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: _categories.map((c) => Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: ActionChip(
-                            label: Text(c),
-                            onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryProductsScreen(categoryName: c)));
-                            },
-                          ),
-                        )).toList(),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: SectionHeader(title: "Popular", onViewAll: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProductListScreen(title: "Popular", products: _popularProducts)));
-                })),
-              const SizedBox(height: 10),
-              SizedBox(height: cardHeight, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: _popularProducts.length, itemBuilder: (context, index) {
-                    return SizedBox(width: cardWidth, child: Padding(padding: EdgeInsets.only(left: index == 0 ? 16.0 : 8.0, right: index == _popularProducts.length - 1 ? 16.0 : 8.0), child: ProductCard(product: _popularProducts[index], heroTagPrefix: 'popular'))
-                    );
-                  },
-                ),
-              ),
-               const SizedBox(height: 20),
-              Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: SectionHeader(title: "New Arrivals", onViewAll: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => ProductListScreen(title: "New Arrivals", products: _newArrivals)));
-                })),
-              const SizedBox(height: 10),
-              SizedBox(height: cardHeight, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: _newArrivals.length, itemBuilder: (context, index) {
-                    return SizedBox(width: cardWidth, child: Padding(padding: EdgeInsets.only(left: index == 0 ? 16.0 : 8.0, right: index == _newArrivals.length - 1 ? 16.0 : 8.0), child: ProductCard(product: _newArrivals[index], heroTagPrefix: 'new-arrivals'))
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
-              Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: SectionHeader(title: "For Office/Home", onViewAll: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => ProductListScreen(title: "For Office/Home", products: _officeProducts)));
-                })),
-              const SizedBox(height: 10),
-              SizedBox(height: cardHeight, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: _officeProducts.length, itemBuilder: (context, index) {
-                    return SizedBox(width: cardWidth, child: Padding(padding: EdgeInsets.only(left: index == 0 ? 16.0 : 8.0, right: index == _officeProducts.length - 1 ? 16.0 : 8.0), child: ProductCard(product: _officeProducts[index], heroTagPrefix: 'office-home'))
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
-              Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: SectionHeader(title: "For Power Users", onViewAll: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => ProductListScreen(title: "For Power Users", products: _powerUserProducts)));
-                })),
-              const SizedBox(height: 10),
-              SizedBox(height: cardHeight, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: _powerUserProducts.length, itemBuilder: (context, index) {
-                    return SizedBox(width: cardWidth, child: Padding(padding: EdgeInsets.only(left: index == 0 ? 16.0 : 8.0, right: index == _powerUserProducts.length - 1 ? 16.0 : 8.0), child: ProductCard(product: _powerUserProducts[index], heroTagPrefix: 'power-users'))
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
-              Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: SectionHeader(title: "For Large Business", onViewAll: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => ProductListScreen(title: "For Large Business", products: _largeBusinessProducts)));
-                })),
-              const SizedBox(height: 10),
-              SizedBox(height: cardHeight, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: _largeBusinessProducts.length, itemBuilder: (context, index) {
-                    return SizedBox(width: cardWidth, child: Padding(padding: EdgeInsets.only(left: index == 0 ? 16.0 : 8.0, right: index == _largeBusinessProducts.length - 1 ? 16.0 : 8.0), child: ProductCard(product: _largeBusinessProducts[index], heroTagPrefix: 'large-business'))
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
-              Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: SectionHeader(title: "Second Hand", onViewAll: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => ProductListScreen(title: "Second Hand", products: _secondHandProducts)));
-                })),
-              const SizedBox(height: 10),
-              SizedBox(height: cardHeight, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: _secondHandProducts.length, itemBuilder: (context, index) {
-                    return SizedBox(width: cardWidth, child: Padding(padding: EdgeInsets.only(left: index == 0 ? 16.0 : 8.0, right: index == _secondHandProducts.length - 1 ? 16.0 : 8.0), child: ProductCard(product: _secondHandProducts[index], heroTagPrefix: 'second-hand'))
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: SectionHeader(title: "Featured Video", onViewAll: () {}),
-              ),
-              const SizedBox(height: 10),
-              GestureDetector(
-                onTap: () {},
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      ClipRRect(borderRadius: BorderRadius.circular(15), child: Image.network("https://i.pinimg.com/originals/a1/f8/be/a1f8be54a08a324c83e747a8fa5ed660.gif", height: 200, width: double.infinity, fit: BoxFit.cover)),
-                      Container(decoration: BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(15))),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        children: [
+          SizedBox(height: 180, child: PageView.builder(controller: _pageController, itemCount: _adData.length, onPageChanged: (int page) => setState(() => _currentPage = page), itemBuilder: (context, index) {
+                final ad = _adData[index];
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), image: DecorationImage(image: NetworkImage(ad['image']), fit: BoxFit.cover)),
+                  child: Container(
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), gradient: LinearGradient(begin: Alignment.bottomRight, colors: [Colors.black.withOpacity(0.8), Colors.black.withOpacity(0.1)])),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Build Your Dream PC", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+                          Text(ad['text'], style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 10),
-                          ElevatedButton(onPressed: () {}, child: const Text("Shop Now")),
+                          ElevatedButton(onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => PromotionScreen(promotionData: ad)));
+                            },
+                            style: ElevatedButton.styleFrom(backgroundColor: Colors.white, foregroundColor: Colors.black),
+                            child: const Text('Shop Now'),
+                          )
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ],
+                );
+              },
+            ),
           ),
-        ),
+          const SizedBox(height: 10),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(_adData.length, (i) => AnimatedContainer(duration: const Duration(milliseconds: 300), margin: const EdgeInsets.symmetric(horizontal: 4.0), height: 8.0, width: 8.0, decoration: BoxDecoration(shape: BoxShape.circle, color: _currentPage == i ? Colors.blue : Colors.grey.withOpacity(0.5)), transform: Matrix4.identity()..scale(_currentPage == i ? 1.5 : 1.0), transformAlignment: Alignment.center))),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: _categories.map((c) => Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: ActionChip(
+                        label: Text(c),
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryProductsScreen(categoryName: c)));
+                        },
+                      ),
+                    )).toList(),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: SectionHeader(title: "Popular", onViewAll: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ProductListScreen(title: "Popular", products: _popularProducts)));
+            })),
+          const SizedBox(height: 10),
+          SizedBox(height: cardHeight, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: _popularProducts.length, physics: const NeverScrollableScrollPhysics(), itemBuilder: (context, index) {
+                return SizedBox(width: cardWidth, child: Padding(padding: EdgeInsets.only(left: index == 0 ? 16.0 : 8.0, right: index == _popularProducts.length - 1 ? 16.0 : 8.0), child: ProductCard(product: _popularProducts[index], heroTagPrefix: 'popular'))
+                );
+              },
+            ),
+          ),
+           const SizedBox(height: 20),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: SectionHeader(title: "New Arrivals", onViewAll: () {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => ProductListScreen(title: "New Arrivals", products: _newArrivals)));
+            })),
+          const SizedBox(height: 10),
+          SizedBox(height: cardHeight, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: _newArrivals.length, physics: const NeverScrollableScrollPhysics(), itemBuilder: (context, index) {
+                return SizedBox(width: cardWidth, child: Padding(padding: EdgeInsets.only(left: index == 0 ? 16.0 : 8.0, right: index == _newArrivals.length - 1 ? 16.0 : 8.0), child: ProductCard(product: _newArrivals[index], heroTagPrefix: 'new-arrivals'))
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: SectionHeader(title: "For Office/Home", onViewAll: () {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => ProductListScreen(title: "For Office/Home", products: _officeProducts)));
+            })),
+          const SizedBox(height: 10),
+          SizedBox(height: cardHeight, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: _officeProducts.length, physics: const NeverScrollableScrollPhysics(), itemBuilder: (context, index) {
+                return SizedBox(width: cardWidth, child: Padding(padding: EdgeInsets.only(left: index == 0 ? 16.0 : 8.0, right: index == _officeProducts.length - 1 ? 16.0 : 8.0), child: ProductCard(product: _officeProducts[index], heroTagPrefix: 'office-home'))
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: SectionHeader(title: "For Power Users", onViewAll: () {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => ProductListScreen(title: "For Power Users", products: _powerUserProducts)));
+            })),
+          const SizedBox(height: 10),
+          SizedBox(height: cardHeight, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: _powerUserProducts.length, physics: const NeverScrollableScrollPhysics(), itemBuilder: (context, index) {
+                return SizedBox(width: cardWidth, child: Padding(padding: EdgeInsets.only(left: index == 0 ? 16.0 : 8.0, right: index == _powerUserProducts.length - 1 ? 16.0 : 8.0), child: ProductCard(product: _powerUserProducts[index], heroTagPrefix: 'power-users'))
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: SectionHeader(title: "For Large Business", onViewAll: () {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => ProductListScreen(title: "For Large Business", products: _largeBusinessProducts)));
+            })),
+          const SizedBox(height: 10),
+          SizedBox(height: cardHeight, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: _largeBusinessProducts.length, physics: const NeverScrollableScrollPhysics(), itemBuilder: (context, index) {
+                return SizedBox(width: cardWidth, child: Padding(padding: EdgeInsets.only(left: index == 0 ? 16.0 : 8.0, right: index == _largeBusinessProducts.length - 1 ? 16.0 : 8.0), child: ProductCard(product: _largeBusinessProducts[index], heroTagPrefix: 'large-business'))
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: SectionHeader(title: "Second Hand", onViewAll: () {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => ProductListScreen(title: "Second Hand", products: _secondHandProducts)));
+            })),
+          const SizedBox(height: 10),
+          SizedBox(height: cardHeight, child: ListView.builder(scrollDirection: Axis.horizontal, itemCount: _secondHandProducts.length, physics: const NeverScrollableScrollPhysics(), itemBuilder: (context, index) {
+                return SizedBox(width: cardWidth, child: Padding(padding: EdgeInsets.only(left: index == 0 ? 16.0 : 8.0, right: index == _secondHandProducts.length - 1 ? 16.0 : 8.0), child: ProductCard(product: _secondHandProducts[index], heroTagPrefix: 'second-hand'))
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SectionHeader(title: "Featured Video", onViewAll: () {}),
+          ),
+          const SizedBox(height: 10),
+          GestureDetector(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  ClipRRect(borderRadius: BorderRadius.circular(15), child: Image.network("https://i.pinimg.com/originals/a1/f8/be/a1f8be54a08a324c83e747a8fa5ed660.gif", height: 200, width: double.infinity, fit: BoxFit.cover)),
+                  Container(decoration: BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(15))),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Build Your Dream PC", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 10),
+                      ElevatedButton(onPressed: () {}, child: const Text("Shop Now")),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+        ],
       ),
     );
   }
