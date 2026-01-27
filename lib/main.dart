@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       cardColor: Colors.white,
       colorScheme: const ColorScheme.light(
         primary: Colors.blue,
-        secondary: Colors.deepOrange,
+        secondary: Colors.lightBlue,
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
       cardColor: const Color(0xFF1E1E1E),
       colorScheme: const ColorScheme.dark(
         primary: Colors.blue,
-        secondary: Colors.deepOrange,
+        secondary: Colors.lightBlue,
       ),
        inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
