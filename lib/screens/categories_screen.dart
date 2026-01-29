@@ -32,7 +32,7 @@ class CategoriesScreen extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              leading: Icon(category['icon'], size: 30, color: Theme.of(context).primaryColor),
+              leading: Icon(category['icon'], size: 30, color: Theme.of(context).colorScheme.secondary),
               title: Text(category['name'], style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {

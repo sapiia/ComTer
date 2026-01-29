@@ -17,4 +17,13 @@ class UserProvider with ChangeNotifier {
     _user.avatar = avatar;
     notifyListeners();
   }
-}
+
+  void resetUser() {
+    _user = User(
+      name: "Sophy Moeurn",
+      email: "sophy.moeurn@example.com",
+      bio: "Tech enthusiast and avid gamer.",
+      avatar: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    );
+    notifyListeners();
+  }}

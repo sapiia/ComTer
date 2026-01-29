@@ -13,6 +13,7 @@ import 'category_products_screen.dart';
 import 'my_orders_screen.dart';
 import 'profile_screen.dart';
 import 'auth_screen.dart';
+import 'search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -54,12 +55,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       if (mounted) {
-         if (_currentPage < _adData.length - 1) {
-          _currentPage++;
-        } else {
-          _currentPage = 0;
+        if (_pageController.hasClients) {
+          if (_currentPage < _adData.length - 1) {
+            _currentPage++;
+          } else {
+            _currentPage = 0;
+          }
+          _pageController.animateToPage(_currentPage, duration: const Duration(milliseconds: 600), curve: Curves.easeInOut);
         }
-        _pageController.animateToPage(_currentPage, duration: const Duration(milliseconds: 600), curve: Curves.easeInOut);
       }
     });
   }
@@ -78,20 +81,35 @@ class _HomeScreenState extends State<HomeScreen> {
     final cardHeight = cardWidth / 0.75;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('TechShop'), actions: [IconButton(icon: const Icon(Icons.search), onPressed: () {})]),
+      appBar: AppBar(
+        title: const Text('TechShop', style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 0.5)),
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search, size: 24),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchScreen())),
+            tooltip: 'Search products',
+          )
+        ],
+      ),
       drawer: Drawer(
         child: Container(
-          color: const Color(0xFF1E1E1E), // Dark background
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
               UserAccountsDrawerHeader(
-                accountName: const Text("Sophy Moeurn", style: TextStyle(fontWeight: FontWeight.bold)),
-                accountEmail: const Text("sophy.moeurn@example.com"),
+                accountName: const Text("Sophy Moeurn", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+                accountEmail: const Text("sophy.moeurn@example.com", style: TextStyle(fontSize: 14)),
                 currentAccountPicture: const CircleAvatar(
                   backgroundImage: NetworkImage('https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'),
                 ),
-                decoration: BoxDecoration(color: Colors.blue.withOpacity(0.2)),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? const Color(0xFF1E293B)
+                      : const Color(0xFF2563EB),
+                  borderRadius: BorderRadius.zero,
+                ),
               ),
               _buildDrawerItem(icon: Icons.home_outlined, text: 'Home', onTap: () => Navigator.pop(context), isSelected: true),
               _buildDrawerItem(icon: Icons.category_outlined, text: 'Categories', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CategoriesScreen()))),
@@ -263,16 +281,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildDrawerItem({required IconData icon, required String text, required GestureTapCallback onTap, bool isSelected = false, Color? textColor}) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
-        color: isSelected ? Colors.blue.withOpacity(0.2) : Colors.transparent,
+        color: isSelected ? (isDark ? const Color(0xFF3B82F6).withOpacity(0.15) : const Color(0xFF2563EB).withOpacity(0.1)) : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListTile(
-        leading: Icon(icon, color: isSelected ? Colors.blue : Colors.white70),
-        title: Text(text, style: TextStyle(color: textColor ?? (isSelected ? Colors.blue : Colors.white), fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+        leading: Icon(icon, color: isSelected ? (isDark ? const Color(0xFF3B82F6) : const Color(0xFF2563EB)) : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)), size: 22),
+        title: Text(text, style: TextStyle(color: textColor ?? (isSelected ? (isDark ? const Color(0xFF3B82F6) : const Color(0xFF2563EB)) : (isDark ? const Color(0xFFE2E8F0) : const Color(0xFF374151))), fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500)),
         onTap: onTap,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     );
   }
